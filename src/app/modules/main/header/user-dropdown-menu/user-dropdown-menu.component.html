@@ -1,0 +1,39 @@
+<li class="nav-item dropdown user-menu">
+    <a
+        class="nav-link dropdown-toggle"
+        data-toggle="dropdown"
+        (click)="toggleDropdownMenu()"
+    >
+        <img
+            [src]="'assets/img/default-profile.png'"
+            class="user-image img-circle elevation-2"
+            alt="User Image"
+        />
+    </a>
+    <ul
+        #dropdownMenu
+        class="dropdown-menu dropdown-menu-lg dropdown-menu-right"
+    >
+        <!-- User image -->
+        <li class="user-header bg-primary">
+            <img
+                [src]="'assets/img/default-profile.png'"
+                class="img-circle elevation-2"
+                alt="User Image"
+            />
+
+            <p>
+                <span>Admin</span>
+            </p>
+        </li>
+
+        <li class="user-footer">
+            <a [routerLink]="['/profile']" class="btn btn-default btn-flat">
+                Profile
+            </a>
+            <a (click)="Logout()" class="btn btn-default btn-flat float-right"
+                >Déconnexion</a
+            >
+        </li>
+    </ul>
+</li>

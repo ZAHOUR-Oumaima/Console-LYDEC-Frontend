@@ -1,0 +1,161 @@
+<!-- Content Header (Page header) -->
+<section class="content-header">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-11">
+        <h1>Postes</h1>
+      </div>
+      <button class="btn btn-outline-success"  (click)="open(addPosteModal)"><i class="fas fa-plus-circle"></i></button>
+    </div>
+  </div>
+  <!-- /.container-fluid -->
+</section>
+
+<!-- Main content -->
+<section class="content">
+
+  <div class="container-fluid">
+
+    <div class="float-left">
+      <span>Filtre : </span>
+      <button (click)="currentPage=0;getAll();" class="btn btn-outline-info ml-3">All</button>
+      <button (click)="currentPage=0;getByLibelle();" class="btn btn-outline-info ml-3">Libelle</button>
+      <button (click)="currentPage=0;getWithoutPosition();" class="btn btn-outline-info ml-3">Pas de position</button>
+      <button (click)="currentPage=0;getByNbClients();" class="btn btn-outline-info ml-3">Nombre de clients</button>
+    </div>
+    <div class="form-group form-inline float-right">
+        Recherche: <input #search (keyup)="currentPage=0;getBySearch(search.value);" [(ngModel)]="searchValue" class="form-control ml-2" type="text" name="searchTerm"/>
+    </div>
+
+    <table class="table table-hover table-bordered table-sm">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col" style="width: 6%">ID</th>
+          <th scope="col" style="width: 30%">Libelle</th>
+          <th scope="col">Position x</th>
+          <th scope="col">Position y</th>
+          <th scope="col" style="width: 15%">Nombre de clients</th>
+          <th scope="col">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let p of postes">
+          <th scope="row">{{p?.id_poste}}</th>
+          <td>{{p?.libelle}}</td>
+          <td>{{p?.x_gps}}</td>
+          <td>{{p?.y_gps}}</td>
+          <td>{{p?.nb_clients}}</td>
+          <td>
+            <button (click)="changeValue(p);open(deleteModal)" class="btn btn-outline-danger mr-2"><i class="fas fa-trash-alt"></i></button>
+            <button [routerLink]="['/']" (click)="redirectToMarker(p);" *ngIf="p?.x_gps !== 0" class="btn btn-outline-primary mr-2"><i class="fas fa-map-marker-alt"></i></button>
+            <button [routerLink]="['/consommation']" (click)="changeIdPosteConso(p.id_poste);changeNomPosteConso(p.libelle);" class="btn btn-outline-primary"><i class="fas fa-chart-line"></i></button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="row">
+      <div class="col">
+
+      <ul class="list-group">
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          Page :
+          <span class="badge badge-dark badge-pill">{{currentPage+1}}</span>
+        </li>
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          Nombre de pages :
+          <span class="badge badge-dark badge-pill">{{totalPages}}</span>
+        </li>
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          Nombre de postes :
+          <span class="badge badge-dark badge-pill">{{totalElements}}</span>
+        </li>
+      </ul>
+
+      </div>
+
+      <div class="col">
+      <nav aria-label="Page navigation float-right justify-content-end">
+        <ul class="pagination pagination-sm justify-content-end">
+          <li class="page-item" [ngClass]="firstPage?'disabled':''">
+            <a class="page-link" (click)="getDeb();"><< Début</a>
+          </li>
+          <li class="page-item" [ngClass]="firstPage?'disabled':''">
+            <a class="page-link" (click)="getPrec();" >Précédent</a>
+          </li>
+          <li class="page-item" [ngClass]="lastPage?'disabled':''">
+            <a class="page-link" (click)="getSuiv();" >Suivant</a>
+          </li>
+          <li class="page-item" [ngClass]="lastPage?'disabled':''">
+            <a class="page-link" (click)="getFin();">Fin >></a>
+          </li>
+        </ul>
+      </nav>
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+<!-- /.content -->
+
+<!-- Add poste Modal -->
+<ng-template #addPosteModal let-modal>
+
+    <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalLabel">Ajouter un poste DP</h5>
+      <button type="button" class="close" (click)="modal.dismiss('Cross click')" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <form #addPoste="ngForm" (ngSubmit)="onSubmit(addPoste);">
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="Libelle" class="col-form-label">Libellé :</label>
+          <input ngModel name="libelle" type="text" class="form-control" id="Libelle" required>
+          <label for="type_poste" class="col-form-label">Type de poste :</label>
+          <input ngModel name="type_poste" type="text" class="form-control" id="type_poste" required>
+          <label for="gsm" class="col-form-label">GSM du poste :</label>
+          <input ngModel name="gsm" type="text" class="form-control" id="gsm" required>
+          <label for="id_prao" class="col-form-label">Id prao :</label>
+          <input ngModel name="id_prao" type="text" class="form-control" id="id_prao" required>
+          <label for="nb_clients" class="col-form-label">Nombre de clients :</label>
+          <input ngModel name="nb_clients" type="number" class="form-control" id="nb_clients" required>
+          <label for="ref_dlg" class="col-form-label">Direction Préfectorale :</label>
+          <input ngModel name="ref_dlg" type="number" class="form-control" id="ref_dlg" required>
+          <label for="fiabilise" class="col-form-label">Fiable :</label>
+          <select ngModel name="fiabilise" id="fiabilise" class="form-control" required>
+            <option selected value="oui">Oui</option>
+            <option value="non">Non</option>
+          </select>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="modal.dismiss('Cross click')">Annuler</button>
+        <button [disabled]="addPoste.invalid" type="submit" class="btn btn-success">Ajouter</button>
+      </div>
+    </form>
+
+</ng-template>
+
+<!-- Supprimer -->
+<ng-template #deleteModal let-modal>
+
+    <div class="modal-header">
+      <h5 class="modal-title" id="deleteModalLabel">Voulez-vous supprimer le poste ?</h5>
+      <button type="button" class="close" (click)="modal.dismiss('Cross click')" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      Attention le poste : <b>{{posteDeleted.libelle}}</b>  sera supprimer définitivement
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="modal.dismiss('Cross click')">Non</button>
+      <button type="button" class="btn btn-danger" (click)="delete();">Oui</button>
+    </div>
+
+</ng-template>
+
+

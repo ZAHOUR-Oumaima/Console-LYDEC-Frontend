@@ -1,0 +1,61 @@
+<div class="container-fluid">
+  <br>
+
+  <div class="row">
+
+
+    <form [formGroup]="date" (ngSubmit)="onFormSubmit()" class="ml-4">
+
+      <mat-form-field appearance="fill">
+        <mat-label>Délégation</mat-label>
+        <mat-select [(ngModel)]="selectedDeleg" [formControl]="delegControl" required>
+          <mat-option *ngFor="let deleg of delegations" [value]="deleg">
+            {{deleg}}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="delegControl.hasError('required')">Selectionner une délégation</mat-error>
+        <mat-hint>{{delegControl.value}}</mat-hint>
+      </mat-form-field>
+
+      <mat-form-field class="ml-4" appearance="fill">
+        <mat-label>Année - Mois</mat-label>
+        <input matInput [matDatepicker]="dp" [formControl]="date">
+        <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
+        <mat-datepicker #dp
+                        startView="multi-year"
+                        (yearSelected)="chosenYearHandler($event)"
+                        (monthSelected)="chosenMonthHandler($event, dp)"
+                        panelClass="example-month-picker">
+        </mat-datepicker>
+      </mat-form-field>
+      <button class="btn btn-outline-primary mb-3 ml-2"><i class="fas fa-poll"></i></button>
+    </form>
+
+  </div>
+
+
+  <div class="row">
+    <p-card class="col-md-12" header="Consommation totale" subheader="Délégation : {{selectedDeleg}}" styleClass="p-card-shadow">
+      <div class="card">
+        <p-chart type="line" [data]="consoData"></p-chart>
+      </div>
+    </p-card>
+  </div>
+
+  <br>
+
+  <div class="row">
+    <p-card class="col-md-6" header="Nombre de Postes/Délégation" styleClass="p-card-shadow">
+      <div class="card">
+        <p-chart type="pie" [data]="nbrPostesData" ></p-chart>
+      </div>
+    </p-card>
+    <p-card class="col-md-6" header="Nombre de Compteurs/Délégation" styleClass="p-card-shadow">
+      <div class="card">
+        <p-chart type="pie" [data]="nbrClientsData" ></p-chart>
+      </div>
+    </p-card>
+  </div>
+
+
+</div>

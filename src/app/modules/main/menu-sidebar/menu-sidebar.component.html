@@ -1,0 +1,64 @@
+<!-- Brand Logo -->
+<a [routerLink]="['/']" class="brand-link">
+    <img
+        src="assets/img/logo.png"
+        alt="LYDEC"
+        class="brand-image elevation-3"
+        style="opacity: 0.8"
+    />
+    <span class="brand-text font-weight-light ml-3">LYDEC</span>
+</a>
+
+<!-- Sidebar -->
+<div class="sidebar">
+
+
+    <!-- Sidebar Menu -->
+    <nav class="mt-4" style="overflow-y: hidden">
+        <ul
+            class="nav nav-pills nav-sidebar flex-column"
+            data-widget="treeview"
+            role="menu"
+            data-accordion="false"
+        >
+            <!-- Add icons to the links using the .nav-icon class
+             with font-awesome or any other icon font library -->
+            <li class="nav-item">
+                <a [routerLink]="['/']" class="nav-link">
+                    <i class="nav-icon far fa-chart-bar"></i>
+                    <p>Tableau de board</p>
+                </a>
+            </li>
+<!--            <li class="nav-item">
+                <a (click)="resetMarkerInfo();" [routerLink]="['/consommation']" class="nav-link">
+                    <i class="nav-icon fas fa-tachometer-alt"></i>
+                    <p>Consommation</p>
+                </a>
+            </li>-->
+            <li (click)="resetMarkerInfo();" class="nav-item">
+                <a [routerLink]="['/postes']" class="nav-link">
+                    <i class="nav-icon fas fa-map-marked-alt"></i>
+                    <p>Postes</p>
+                </a>
+            </li>
+            <li (click)="resetMarkerInfo();" class="nav-item">
+                <a  class="nav-link">
+                    <i class="nav-icon fas fa-users"></i>
+                    <p>Clients</p>
+                </a>
+            </li>
+            <li (click)="resetMarkerInfo();" class="nav-item">
+                <a  class="nav-link">
+                    <i class="nav-icon fas fa-exclamation-triangle"></i>
+                    <p>Zones sensibles</p>
+                </a>
+            </li>
+          <li class="nav-item">
+            <a (click)="resetMarkerInfo();" [routerLink]="['/vue_deleg']" class="nav-link">
+              <i class="nav-icon fas fa-info"></i>
+              <p>Vue_délégations</p>
+            </a>
+          </li>
+        </ul>
+    </nav>
+</div>

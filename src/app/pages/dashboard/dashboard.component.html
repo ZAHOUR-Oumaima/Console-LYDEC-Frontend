@@ -1,0 +1,124 @@
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0 text-dark">Tableau de bord</h1>
+            </div>
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
+
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        <!-- Small boxes (Stat box) -->
+        <div class="row">
+            <div class="col-lg-3 col-6">
+                <!-- small box -->
+                <div class="small-box bg-info">
+                    <div class="inner">
+                        <h3>{{dernierConsommation}}<sup style="font-size: 20px">kWh</sup></h3>
+
+                        <p>Consommation total</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-speedometer"></i>
+                    </div>
+                    <a href="#" class="small-box-footer"
+                        >Plus d'informations <i class="fas fa-arrow-circle-right"></i
+                    ></a>
+                </div>
+            </div>
+            <!-- ./col -->
+            <div class="col-lg-3 col-6">
+                <!-- small box -->
+                <div class="small-box bg-success">
+                    <div class="inner">
+                        <h3>53<sup style="font-size: 20px">%</sup></h3>
+
+                        <p>Rendement total</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-stats-bars"></i>
+                    </div>
+                    <a href="#" class="small-box-footer"
+                        >Plus d'informations <i class="fas fa-arrow-circle-right"></i
+                    ></a>
+                </div>
+            </div>
+            <!-- ./col -->
+            <div class="col-lg-3 col-6">
+                <!-- small box -->
+                <div class="small-box bg-warning">
+                    <div class="inner">
+                        <h3>44<sup style="font-size: 20px">%</sup></h3>
+
+                        <p>Rattachement total</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-shuffle"></i>
+                    </div>
+                    <a href="#" class="small-box-footer"
+                        >Plus d'informations <i class="fas fa-arrow-circle-right"></i
+                    ></a>
+                </div>
+            </div>
+            <!-- ./col -->
+            <div class="col-lg-3 col-6">
+                <!-- small box -->
+                <div class="small-box bg-danger">
+                    <div class="inner">
+                        <h3>65</h3>
+
+                        <p>Nombre d'alertes</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-alert-circled"></i>
+                    </div>
+                    <a href="#" class="small-box-footer"
+                        >Plus d'informations <i class="fas fa-arrow-circle-right"></i
+                    ></a>
+                </div>
+            </div>
+            <!-- ./col -->
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- Main row -->
+
+    <!-- Maps -->
+    <div class="container-fluid">
+
+      <div class="form-group row ml-4">
+        <label class="col-md-2 col-form-label" for="deleg" class="col-form-label">Direction Préfectorale :</label>
+        <div class="col-md-4 mr-5">
+          <select id="deleg" (click)="getPostesByDeleg();" class="custom-select" [(ngModel)]="selectedDeleg">
+              <option value=0>Clear</option>
+              <option *ngFor="let deleg of delegations" value={{deleg}} >{{deleg}}</option>
+          </select>
+        </div>
+        <label class="col-md-2 col-form-label" for="rendement" class="col-form-label">Rendement :</label>
+        <div class="col-md-4 mt-3">
+          <p-slider (ngModelChange)="getPostesByDeleg();" id="rendement" [step]="5" [min]="0" [max]="100" [(ngModel)]="rangeValues" [range]="true"></p-slider>
+          <span class="d-flex justify-content-center">{{rangeValues[0] + ' - ' + rangeValues[1]}}</span>
+        </div>
+      </div>
+
+      <!-- Small boxes (Stat box) -->
+      <div class="row ml-2 mr-2 justify-content-sm-center">
+          <div class="map-border">
+              <div id="map">
+                <button (click)="fullScreen();" class="leaflet-bar leaflet-control leaflet-control-custom"><i class="fas fa-compress"></i></button>
+              </div>
+          </div>
+      </div>
+
+    </div>
+
+
+</section>
+<!-- /.content -->
+

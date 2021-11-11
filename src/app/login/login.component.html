@@ -1,0 +1,28 @@
+<div class="login-body">
+  <div class="container-fluid logo">
+    <div class="row">
+      <div class="col-md-5"></div>
+      <div class="col-md-2"><img class="mx-auto d-block" src="assets/img/logo.png" alt="" height="80px"></div>
+      <div class="col-md-5"></div>
+    </div>
+  </div>
+  <div class="container content-box">
+    <div class="row">
+      <div class="col-sm-6">
+        <img class="img-fluid" src="assets/img/cnx.svg" alt="image" width="350px">
+      </div>
+      <div class="col-sm-6">
+
+        <div class="form-group">
+          <label for="username"><img class="img-fluid" src="assets/img/user.svg" alt="image" width="20px"> Username</label>
+          <input type="text" class="form-control" name="username" [(ngModel)]="username" id="username" aria-describedby="textHelpId" required>
+          <label for="password"><img class="img-fluid" src="assets/img/lock.svg" alt="image" width="20px"> Password</label>
+          <input type="password" class="form-control" name="password" [(ngModel)]="password" id="password" aria-describedby="passwordHelpId" required>
+        </div>
+        <p *ngIf="invalidLogin" style="color:red;">Username or password invalid</p>
+        <button class="btn" (click)="checkLogin()" >Connexion</button>
+
+      </div>
+    </div>
+  </div>
+</div>
